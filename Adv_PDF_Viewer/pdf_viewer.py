@@ -1,7 +1,3 @@
-# ============================================================
-#  PDFViewer — rendering engine
-#  Supports: continuous scroll, single-page, dark PDF, zoom presets
-# ============================================================
 
 import tkinter as tk
 import fitz
@@ -30,10 +26,7 @@ class PDFViewer:
         # Cache of page labels so we can scroll to a page in continuous mode
         self._page_labels = []
 
-    # ----------------------------------------------------------
-    # Open / load
-    # ----------------------------------------------------------
-
+  
     def open_pdf(self, file_path):
         """Open a PDF file and render it."""
         if self.doc:
@@ -44,10 +37,6 @@ class PDFViewer:
         self.zoom = 1.0
 
         self.render()
-
-    # ----------------------------------------------------------
-    # Rendering
-    # ----------------------------------------------------------
 
     def render(self):
         """Dispatch to continuous or single-page rendering."""
@@ -125,10 +114,7 @@ class PDFViewer:
         self.canvas.update_idletasks()
         self.canvas.config(scrollregion=self.canvas.bbox("all"))
 
-    # ----------------------------------------------------------
-    # Navigation
-    # ----------------------------------------------------------
-
+  
     def next_page(self):
         if not self.doc:
             return
@@ -188,10 +174,7 @@ class PDFViewer:
         fraction = lbl_y / total_height
         self.canvas.yview_moveto(fraction)
 
-    # ----------------------------------------------------------
-    # Zoom
-    # ----------------------------------------------------------
-
+ 
     def zoom_in(self):
         if not self.doc:
             return
@@ -242,10 +225,7 @@ class PDFViewer:
         self.zoom = max(0.2, min(round(min(zoom_w, zoom_h), 2), 5.0))
         self.render()
 
-    # ----------------------------------------------------------
-    # Mode toggles
-    # ----------------------------------------------------------
-
+  
     def set_continuous(self, value: bool):
         self.continuous = value
         self.render()
@@ -257,9 +237,6 @@ class PDFViewer:
         self.dark_pdf = value
         self.render()
 
-    # ----------------------------------------------------------
-    # Info
-    # ----------------------------------------------------------
 
     def get_page_count(self):
         return len(self.doc) if self.doc else 0

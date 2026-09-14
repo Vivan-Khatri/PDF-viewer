@@ -1,19 +1,8 @@
-# ============================================================
-#  Advanced PDF Viewer — Main Application
-#  Features: continuous scroll, dark PDF mode, premium UI,
-#            keyboard shortcuts, fit-width/page, jump to page
-# ============================================================
-
 import tkinter as tk
 from tkinter import filedialog, ttk
 
 from pdf_viewer import PDFViewer
 from theme import LIGHT_THEME, DARK_THEME
-
-
-# ============================================================
-#  Helper: styled button factory
-# ============================================================
 
 def make_button(parent, text, command, width=None, accent=False,
                 font_size=11, bold=False, tooltip=None, **kw):
@@ -79,10 +68,7 @@ def make_separator(parent, colors):
     sep.pack(side="left", fill="y", padx=8, pady=6)
     return sep
 
-
-# ============================================================
-#  Main Application
-# ============================================================
+#Main
 
 class PDFApplication:
 
@@ -126,10 +112,8 @@ class PDFApplication:
 
         # Initial theme
         self.apply_theme()
-
-    # ----------------------------------------------------------
-    # Toolbar
-    # ----------------------------------------------------------
+        
+#Toolbar
 
     def _build_toolbar(self):
         self.toolbar = tk.Frame(self.root, height=60)
@@ -189,7 +173,7 @@ class PDFApplication:
         )
         self.next_btn.pack(side="left", padx=2, pady=8)
 
-        # ---- GROUP 3: Zoom --------------------------------
+        #zoom
         self.zoom_out_btn = make_button(
             self.toolbar, "−", self.zoom_out,
             tooltip="Zoom out  (Ctrl+−)"
@@ -228,7 +212,7 @@ class PDFApplication:
         )
         self.fit_page_btn.pack(side="left", padx=2, pady=8)
 
-        # ---- GROUP 4: View toggles (right-aligned) --------
+        # View toggles 
         self.theme_btn = make_button(
             self.toolbar, "🌙  Dark UI", self.toggle_theme,
             font_size=11, bold=True,
@@ -249,10 +233,6 @@ class PDFApplication:
             tooltip="Toggle continuous / single-page mode"
         )
         self.scroll_mode_btn.pack(side="right", padx=2, pady=8)
-
-    # ----------------------------------------------------------
-    # Canvas area (PDF display)
-    # ----------------------------------------------------------
 
     def _build_canvas_area(self):
         # Outer container holds canvas + both scrollbars
@@ -298,10 +278,7 @@ class PDFApplication:
         self._welcome_id = None
         self._draw_welcome()
 
-    # ----------------------------------------------------------
-    # Status bar
-    # ----------------------------------------------------------
-
+    
     def _build_statusbar(self):
         self.statusbar = tk.Frame(self.root, height=32)
         self.statusbar.pack(side="bottom", fill="x")
@@ -331,10 +308,6 @@ class PDFApplication:
             anchor="center"
         )
         self.status_hint.pack(side="left", padx=20)
-
-    # ----------------------------------------------------------
-    # PDF actions
-    # ----------------------------------------------------------
 
     def open_pdf(self):
         file_path = filedialog.askopenfilename(
@@ -431,10 +404,6 @@ class PDFApplication:
         else:
             self.status_right.config(text="")
 
-    # ----------------------------------------------------------
-    # Entry callbacks
-    # ----------------------------------------------------------
-
     def _on_page_entry(self, event):
         try:
             page = int(self.page_entry.get())
@@ -455,10 +424,7 @@ class PDFApplication:
         except ValueError:
             self.update_labels()
 
-    # ----------------------------------------------------------
-    # Scroll / center
-    # ----------------------------------------------------------
-
+ 
     def _on_canvas_configure(self, event=None):
         self._center_content()
         self._reposition_welcome()
@@ -475,10 +441,6 @@ class PDFApplication:
 
         x_margin = max(0, (canvas_w - frame_w) // 2)
         self.canvas.coords(self.canvas_window, x_margin, 0)
-
-    # ----------------------------------------------------------
-    # Welcome screen helpers
-    # ----------------------------------------------------------
 
     def _draw_welcome(self):
         """Draw a centred welcome prompt directly on the canvas."""
@@ -543,10 +505,7 @@ class PDFApplication:
         else:
             self.zoom_out()
 
-    # ----------------------------------------------------------
-    # Toggles
-    # ----------------------------------------------------------
-
+ 
     def toggle_theme(self):
         self.dark_mode = not self.dark_mode
         self.theme = DARK_THEME if self.dark_mode else LIGHT_THEME
@@ -580,9 +539,6 @@ class PDFApplication:
 
         self._center_content()
 
-    # ----------------------------------------------------------
-    # Theme application
-    # ----------------------------------------------------------
 
     def apply_theme(self):
         c = self.theme
@@ -659,9 +615,6 @@ class PDFApplication:
                 widget.config(bg=c["canvas"])
 
 
-# ============================================================
-#  Entry point
-# ============================================================
 
 if __name__ == "__main__":
     root = tk.Tk()

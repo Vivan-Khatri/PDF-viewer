@@ -1,7 +1,3 @@
-# ============================================================
-#  Theme definitions — Advanced PDF Viewer
-# ============================================================
-
 LIGHT_THEME = {
     # Window / background
     "window":           "#F0F2F5",
